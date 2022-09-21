@@ -55,6 +55,7 @@ class Car:
             self._change_xy_based_on_controller()
     
     def _change_xy_based_on_controller(self):
+        # Adapted from: https://github.com/gniziemazity/Self-driving-car/blob/70b48f39000075c77bfab5cf7015774164179021/1.%20Car%20driving%20mechanics/car.js
         if self.controller['forward']:
             self.speed += self.ACCELERATION
 
