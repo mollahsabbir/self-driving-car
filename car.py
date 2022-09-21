@@ -3,20 +3,22 @@ import math
 from utils import blit_rotate_center
 import configs
 
-class Car:
+class Car(object):
     
     MAX_SPEED = configs.CAR_MAX_SPEED
     ROTATION_SPEED = configs.CAR_ROTATION_SPEED
     ACCELERATION = configs.CAR_ACCELERATION
     FRICTION = configs.CAR_FRICTION
     
-    def __init__(self, image, controller):
+    def __init__(self, image, controller, track):
         self.image = image
         
         self.x = configs.START_POSITION_X
         self.y = configs.START_POSITION_Y
         self.angle = configs.START_ROTATION_ANGLE
         self.speed = 0
+        
+        self.track = track
         
         self.controller = controller
         
@@ -39,11 +41,11 @@ class Car:
         
         return corners
     
-    def check_collision(self, track):
+    def check_collision(self):
         corners = self.get_corners()
         
         for point in corners:
-            if track.get_at((int(point[0]), int(point[1]))) == configs.OBSTACLE_COLOR:
+            if self.track.get_at((int(point[0]), int(point[1]))) == configs.OBSTACLE_COLOR:
                 return True
         return False
     
@@ -92,6 +94,10 @@ class Car:
         radians = math.radians(self.angle)
         self.y -= math.cos(radians) * self.speed
         self.x -=  math.sin(radians) * self.speed
+    
+    def update(self, win):
+        self.move()
+        self.draw(win)
         
     def draw(self, win):
         blit_rotate_center(win, self.image, (self.x, self.y), self.angle)

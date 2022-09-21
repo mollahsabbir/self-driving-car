@@ -5,6 +5,7 @@ import math
 import configs
 
 from car import Car
+from sensoredcar import SensoredCar
 from controllers import KeyboardController
 from eventhandler import EventHandler, GameExitEventListener
 
@@ -14,8 +15,8 @@ if __name__ == "__main__":
     car_image = pygame.image.load(configs.CAR_IMAGE)
     
     kb_controller = KeyboardController()
-    car = Car(car_image, kb_controller)
-    
+    # car = Car(car_image, kb_controller)
+    car = SensoredCar(car_image, kb_controller, track)
     
     win_width, win_height = track.get_width(), track.get_height()
     win = pygame.display.set_mode((win_width, win_height))
@@ -33,9 +34,7 @@ if __name__ == "__main__":
         
         win.blit(track, (0,0))
         
-        car.move()
-        print(car.check_collision(track))
-        car.draw(win)
+        car.update(win)
         
         pygame.display.update()
 
