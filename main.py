@@ -9,40 +9,18 @@ from sensoredcar import SensoredCar
 from controllers import KeyboardController
 from eventhandler import EventHandler, GameExitEventListener
 
+from gamemodes import KeyboardGameMode, TrainGameMode, SelfDrivingGameMode
+
 if __name__ == "__main__":
     
-    track = pygame.image.load(configs.TRACK_IMAGE)
-    car_image = pygame.image.load(configs.CAR_IMAGE)
+    if configs.GAME_MODE == "TRAIN":
+        game_mode = TrainGameMode()
+    elif configs.GAME_MODE == "SELFDRIVING":
+        game_mode = SelfDrivingGameMode()
+    else:
+        game_mode = KeyboardGameMode()
     
-    kb_controller = KeyboardController()
-    # car = Car(car_image, kb_controller)
-    car = SensoredCar(car_image, kb_controller, track)
-    
-    win_width, win_height = track.get_width(), track.get_height()
-    win = pygame.display.set_mode((win_width, win_height))
-    pygame.display.set_caption("Self Driving Car")
-    
-    event_listeners = [GameExitEventListener(), kb_controller]
-    for listener in event_listeners:
-        EventHandler.register(listener)
-        
-    run = True
-    clock = pygame.time.Clock()
-    
-    while run:
-        clock.tick(configs.FPS)
-        
-        win.blit(track, (0,0))
-        
-        car.update(win)
-        
-        pygame.display.update()
-
-        
-        for event in pygame.event.get():
-            EventHandler.notify(event)
-                
-    pygame.quit()
+    game_mode.play()
                 
         
         

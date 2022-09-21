@@ -24,7 +24,7 @@ class SensoredCar(Car):
         return sensors
     
     def update(self, win):
-        super(SensoredCar, self).update(win)
+        super(SensoredCar, self).update(win, sensor_values=self.sensor_values)
         self.draw(win)
         
         for i, sensor in enumerate(self.sensors):

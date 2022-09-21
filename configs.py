@@ -1,3 +1,7 @@
+
+# Mode can be of type: "KEYBOARD", "SELFDRIVING" and "TRAIN"
+GAME_MODE = "TRAIN"
+
 TRACK_IMAGE = "assets/tracks/track1.png"
 
 CAR_IMAGE = "assets/cars/skybluecar.png"
@@ -18,3 +22,11 @@ SENSOR_SIZE = 150
 SENSOR_COLOR = (255, 255, 0, 255)
 SENSOR_ACTIVE_COLOR = (0, 0, 255, 255)
 SENSOR_ANGLES = [-60, -30, 0, 30, 60]
+
+TRAIN_CARS_NUMBER = 100
+SECONDS_PER_GENERATION = 60
+MODEL_LOCATION = "model/best_model.pickle"
+# Input of the neural network is equal to
+# the number of sensors
+# Output size is 4: Forward, Reverse, Left, Right
+NN_LAYERS_DIMS = [len(SENSOR_ANGLES), 10, 4]

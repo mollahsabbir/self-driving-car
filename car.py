@@ -23,45 +23,34 @@ class Car(object):
         self.controller = controller
         
         self.engine_on = True
-    
-    def get_corners(self):
-        half_side = self.image.get_width() / 2
-        width, height = self.image.get_width(), self.image.get_height()
-        center = (self.x + width/2, self.y + height/2)
-        left_top = (center[0] + math.cos(math.radians(360 - (self.angle + 30))) * half_side, 
-                    center[1] + math.sin(math.radians(360 - (self.angle + 30))) * half_side)
-        
-        right_top = (center[0] + math.cos(math.radians(360 - (self.angle + 150))) * half_side, 
-                        center[1] + math.sin(math.radians(360 - (self.angle + 150))) * half_side)
-        left_bottom = (center[0] + math.cos(math.radians(360 - (self.angle + 210))) * half_side, 
-                        center[1] + math.sin(math.radians(360 - (self.angle + 210))) * half_side)
-        right_bottom = (center[0] + math.cos(math.radians(360 - (self.angle + 330))) * half_side, 
-                        center[1] + math.sin(math.radians(360 - (self.angle + 330))) * half_side)
-        corners = (left_top, right_top, left_bottom, right_bottom)
-        
-        return corners
+        self.score = 0
     
     def check_collision(self):
-        corners = self.get_corners()
+        width, height = self.image.get_width(), self.image.get_height()
+        center = (self.x + width/2, self.y + height/2)
         
-        for point in corners:
-            if self.track.get_at((int(point[0]), int(point[1]))) == configs.OBSTACLE_COLOR:
-                return True
-        return False
+        collided = False
+
+        if self.track.get_at((int(center[0]), int(center[1]))) == configs.OBSTACLE_COLOR:
+            collided = True
+            self.score -= 10
+                
+        self.engine_on = not collided
     
     def move(self):
-        
-        # print("x",self.x, "y", self.y, "speed", self.speed, "angle", self.angle)
-        
         if self.engine_on:
             self._change_xy_based_on_controller()
+        else:
+            self.speed = 0
     
     def _change_xy_based_on_controller(self):
         # Adapted from: https://github.com/gniziemazity/Self-driving-car/blob/70b48f39000075c77bfab5cf7015774164179021/1.%20Car%20driving%20mechanics/car.js
         if self.controller['forward']:
+            self.score += 5
             self.speed += self.ACCELERATION
 
         if self.controller['reverse']:
+            self.score -= 6
             self.speed-=self.ACCELERATION
         
         if self.speed > Car.MAX_SPEED:
@@ -95,8 +84,10 @@ class Car(object):
         self.y -= math.cos(radians) * self.speed
         self.x -=  math.sin(radians) * self.speed
     
-    def update(self, win):
+    def update(self, win, **kwargs):
+        self.controller.update(win, **kwargs)
         self.move()
+        self.check_collision()
         self.draw(win)
         
     def draw(self, win):

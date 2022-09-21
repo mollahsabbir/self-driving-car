@@ -1,4 +1,5 @@
 import pygame
+import numpy as np
 from eventhandler import EventHandler
 
 class KeyboardController:
@@ -10,10 +11,9 @@ class KeyboardController:
             "right":False
         }
         
-    # @EventHandler.register(pygame.KEYDOWN)
-    # def keydownPrint(self, event):
-    #     print(event.key)
-        
+    def update(self, win, **kargs):
+        pass
+    
     def listen(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
@@ -36,4 +36,42 @@ class KeyboardController:
                     
     def __getitem__(self, idx):
         return self.controls_dict[idx]
+
+class NNController:
+    INDEX_TO_CONTROL = {
+        0:"forward",
+        1:"reverse",
+        2:"left",
+        3:"right"
+    }
+    def __init__(self, neural_net):
+        
+        self.neural_net = neural_net
+        
+        self.controls_dict = {
+            "forward":False,
+            "reverse":False,
+            "left":False,
+            "right":False
+        }
     
+    def update(self, win, **kargs):
+        sensor_values = kargs['sensor_values']
+        
+        # Shape shoud be [input, 1]
+        values_np = np.array(sensor_values).reshape(-1, 1)
+        output = self.neural_net.forward(values_np)
+        
+        index = np.argmax(output)
+        control = NNController.INDEX_TO_CONTROL[index]
+        self.controls_dict = {
+            "forward":False,
+            "reverse":False,
+            "left":False,
+            "right":False
+        }
+        self.controls_dict[control] = True
+        # print(output)
+    
+    def __getitem__(self, idx):
+        return self.controls_dict[idx]
