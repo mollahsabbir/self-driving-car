@@ -1,5 +1,5 @@
 # Mode can be of type: "KEYBOARD", "SELFDRIVING" and "TRAIN"
-GAME_MODE = "TRAIN"
+GAME_MODE = "SELFDRIVING"
 
 TRACK_IMAGE = "assets/tracks/track1.png"
 
