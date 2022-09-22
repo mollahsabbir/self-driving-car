@@ -25,6 +25,7 @@ SENSOR_ANGLES = [-60, -30, 0, 30, 60]
 TRAIN_CARS_NUMBER = 100
 SECONDS_PER_GENERATION = 60
 MODEL_LOCATION = "model/best_model.pickle"
+BACKUP_MODEL_LOCATION = "model/backup_best_model.pickle"
 # Input of the neural network is equal to
 # the number of sensors
 # Output size is 4: Forward, Reverse, Left, Right

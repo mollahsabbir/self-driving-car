@@ -153,7 +153,7 @@ class SelfDrivingGameMode:
         track = pygame.image.load(configs.TRACK_IMAGE)
         car_image = pygame.image.load(configs.CAR_IMAGE)
              
-        with open(configs.MODEL_LOCATION, 'rb') as handle:
+        with open(configs.BACKUP_MODEL_LOCATION, 'rb') as handle:
             best_network = pickle.load(handle)
             
         nn_controller = NNController(best_network)
