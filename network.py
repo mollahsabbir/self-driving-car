@@ -1,4 +1,5 @@
 import numpy as np
+import configs
 
 class Network:
     def __init__(self, layers_dims, weights=None, biases=None):
@@ -36,7 +37,7 @@ class NetworkFactory:
     def __init__(self, layers_dims):
         self.layers_dims = layers_dims
         
-    def _mutate_from_base_network(self, base_network, num_mutations, amount=0.5):
+    def _mutate_from_base_network(self, base_network, num_mutations, amount=configs.MUTATION_AMOUNT):
         all_networks = [base_network]
 
         for i in range(1, num_mutations):

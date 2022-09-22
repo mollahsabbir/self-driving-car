@@ -41,8 +41,8 @@ class NNController:
     INDEX_TO_CONTROL = {
         0:"forward",
         1:"reverse",
-        2:"left",
-        3:"right"
+        2:"right",
+        3:"left"
     }
     def __init__(self, neural_net):
         

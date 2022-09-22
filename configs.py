@@ -1,5 +1,5 @@
 # Mode can be of type: "KEYBOARD", "SELFDRIVING" and "TRAIN"
-GAME_MODE = "SELFDRIVING"
+GAME_MODE = "TRAIN"
 
 TRACK_IMAGE = "assets/tracks/track1.png"
 
@@ -24,6 +24,7 @@ SENSOR_ANGLES = [-60, -30, 0, 30, 60]
 
 TRAIN_CARS_NUMBER = 100
 SECONDS_PER_GENERATION = 60
+MUTATION_AMOUNT = 0.5
 MODEL_LOCATION = "model/best_model.pickle"
 BACKUP_MODEL_LOCATION = "model/backup_best_model.pickle"
 # Input of the neural network is equal to
